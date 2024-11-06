@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    command: ./entrypoint.sh
+    env_file:
+      - .env.prod  # Production environment variables
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    volumes:
+      - CLOTHING_JMW:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  CLOTHING_JMW:

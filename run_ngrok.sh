@@ -1,0 +1,1 @@
+docker run -it --network jmw_default -e NGROK_AUTHTOKEN ngrok/ngrok http web:8000
