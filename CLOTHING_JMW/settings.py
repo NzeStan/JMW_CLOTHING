@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     # Local
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
+    "NYSC.apps.NyscConfig",
+    "cart.apps.CartConfig",
 ]
 
 MIDDLEWARE = [
@@ -92,6 +94,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "cart.context_processors.cart",
             ],
         },
     },
@@ -179,8 +182,8 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "1023762456851-fn0rm6k32hsb0ejqd4vo6rui9a8ihpbk.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": env("GOOGLE_CLIENT_ID"),
+            "secret": env("GOOGLE_SECRET"),
         },
         "SCOPE": [
             "profile",
@@ -224,3 +227,6 @@ TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Shopping cart
+CART_SESSION_ID = "cart"

@@ -1,22 +1,78 @@
 {% extends "_base.html" %}
 {% load socialaccount %}
+{% load widget_tweaks %}
+
+{% block header %}
+{% endblock header %}
+
+{% block nav_bar %}
+{% endblock nav_bar %}
+
+{% block title %}Log In - Jume Mega Wears & Accessories{% endblock title %}
 
 {% block content %}
-<div class="container">
-    <h2>Login</h2>
-    
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
 
-    <div class="social-login">
-        <h3>Or login with:</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 w-full h-screen">
+    <div class="hidden md:flex col-span-2 items-center justify-center">
+        <img src="https://flowbite.com/docs/images/logo.svg" class="animate-bounce" alt="JMW_Logo">
+    </div>
+    <div class="flex flex-col justify-center items-center">
+        <h2 class="text-2xl font-semibold mb-6">Log In</h2>
         
-        <a href="{% provider_login_url 'google' %}" class="social-button google">
-            Login with Google
-        </a>
+        <form method="POST" class="max-w-sm w-full mx-auto space-y-5">
+        {% csrf_token %}
+            <div>
+                <label for="login" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                <input type="email" name="login" id="login"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            
+            <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                <input type="password" name="password" id="password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            
+            <div class="flex justify-end mb-4">
+                <a href="{% url 'account_reset_password' %}" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+                    Forgot password?
+                </a>
+            </div>
+            <button type="submit" class="w-full bg-blue-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Log In
+            </button>
+        </form>
+
+        <div class="flex items-center my-6 w-full max-w-sm mx-auto">
+            <hr class="flex-grow border-t border-gray-300">
+            <span class="mx-2 text-sm text-gray-500">Or Log In with</span>
+            <hr class="flex-grow border-t border-gray-300">
+        </div>
+
+        <div class="flex flex-col space-y-3 w-full max-w-sm">
+            <a href="{% provider_login_url 'google' %}" class="w-full bg-[#4285F4] text-white font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center dark:focus:ring-[#4285F4]/55 hover:bg-[#357ae8]" role="button">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                    <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                </svg>
+                Google
+            </a>
+            <a href="#" class="w-full bg-[#3b5998] text-white font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center dark:focus:ring-[#3b5998]/55 hover:bg-[#334d8c]" role="button">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                    <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                </svg>
+                Facebook
+            </a>
+            <a href="#" class="w-full bg-[#1da1f2] text-white font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center dark:focus:ring-[#1da1f2]/55 hover:bg-[#1991da]" role="button">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">
+                    <path fill-rule="evenodd" d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z" clip-rule="evenodd"/>
+                </svg>
+                Twitter
+            </a>
+        </div>
     </div>
 </div>
+
 {% endblock %}
+
+{% block footer %}
+{% endblock footer %}

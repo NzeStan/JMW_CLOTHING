@@ -5,22 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% tailwind_css %}
-    <title>{% block title %}CLOTHING_JMW{% endblock %}</title>
+    <title>{% block title %}JUME MEGA WEARS & ACCESSORIES{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
 </head>
-<body class="min-h-screen bg-gray-100">
+<body class=" bg-gray-100">
     <header>
-        {# Your header content #}
+        {% block header %}
+        <div class="text-center py-4 my-2 md:py-6 md:my-3 lg:py-8 lg:my-4">
+        <h1
+            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold font-serif text-red-600 animate-pulse px-4">
+            JUME MEGA WEARS & ACCESSORIES
+        </h1>
+    </div>
+    {% endblock header %}
     </header>
 
+    <nav>
+    {% block nav_bar %}
+    {% include "partials/navbar.html" %}
+    {% endblock nav_bar %}
+    </nav>
+ 
+    {% block messages %}
+    {% include "partials/messages.html" %}
+    {% endblock %}
+
     <main>
+        <div class="container mx-auto mt-4">
         {% block content %}
-        {% endblock %}
+        {% endblock content %}
+        </div>
     </main>
 
     <footer>
-        {# Your footer content #}
+        {% block footer %}
+        {% include "partials/footer.html" %}
+        {% endblock footer %}
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <script src="{% static 'js/base.js' %}" defer></script>
 </body>
 </html>
