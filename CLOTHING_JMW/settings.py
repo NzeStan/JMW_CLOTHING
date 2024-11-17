@@ -230,3 +230,123 @@ INTERNAL_IPS = [
 
 # Shopping cart
 CART_SESSION_ID = "cart"
+
+
+# logging
+import os
+
+LOGS_DIR = BASE_DIR / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
+
+DEBUG = os.getenv("DEBUG", "False").lower() in ["true", "1"]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+        "detailed": {
+            "format": "{levelname} {asctime} {name} {module} {funcName} {lineno} {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG" if DEBUG else "INFO",
+            "filters": ["require_debug_true"] if DEBUG else ["require_debug_false"],
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file_debug": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(LOGS_DIR / "debug.log"),
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 10,  # Increased for production
+            "formatter": "detailed",
+        },
+        "file_info": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(LOGS_DIR / "info.log"),
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 10,
+            "formatter": "verbose",
+        },
+        "file_error": {
+            "level": "ERROR",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(LOGS_DIR / "error.log"),
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 10,
+            "formatter": "detailed",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+            "formatter": "detailed",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console", "file_info", "file_error"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": True,
+        },
+        "django": {
+            "handlers": ["console", "file_info", "mail_admins"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.server": {
+            "handlers": ["console", "file_info"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["file_error", "mail_admins"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["file_debug"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["file_error", "mail_admins"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "cart": {
+            "handlers": ["console", "file_debug", "file_info", "file_error"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "NYSC": {
+            "handlers": ["console", "file_debug", "file_info", "file_error"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+#ADMINS = [("Your Name", "your.email@example.com")]
+#SERVER_EMAIL = "server@example.com"
+#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

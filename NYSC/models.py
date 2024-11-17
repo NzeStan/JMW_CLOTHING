@@ -3,6 +3,10 @@ from django.urls import reverse
 import uuid
 from django.core.validators import MinValueValidator
 from .constants import TYPE_CHOICES, PRODUCT_NAME
+from django.contrib.sessions.models import Session
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Category(models.Model):
@@ -36,14 +40,16 @@ class Product(models.Model):
     price = models.DecimalField(
         max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)]
     )
-    size = models.CharField(max_length=11)
+    size = models.CharField(max_length=20, blank=True)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
 
+
     def __str__(self):
         return self.name
+
 
     def get_absolute_url(self):
         return reverse("nysc:product_detail", args=[self.id, self.slug])

@@ -7,3 +7,5 @@ db.sqlite3
 .dockerignore
 theme/static/css/dist/styles.css
 /staticfiles
+logs/
+*.log

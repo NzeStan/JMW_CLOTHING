@@ -3,6 +3,9 @@ from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404
 from .models import Category, Product
 from cart.forms import CartAddProductForm
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 class ProductListView(ListView):

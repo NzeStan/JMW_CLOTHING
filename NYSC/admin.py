@@ -14,7 +14,6 @@ class ProductAdmin(admin.ModelAdmin):
         "name",
         "slug",
         "price",
-        "size",
         "available",
         "created",
         "updated",
@@ -23,6 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
         "available",
         "created",
         "updated",
+        "type",
     ]
     list_editable = [
         "price",

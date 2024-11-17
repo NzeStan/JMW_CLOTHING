@@ -19,9 +19,9 @@
     
     <p class="price">${{ product.price }}</p>
 
-    <form action="{% url "cart:cart_add" product.id %}" method="post">
-    {{ cart_product_form }}
+    <form action="{% url 'cart:cart_add' 'Product' product.id %}" method="post">
     {% csrf_token %}
+    {{ cart_product_form }}
     <input type="submit" value="Add to cart">
     </form>
 

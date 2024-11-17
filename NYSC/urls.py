@@ -16,3 +16,8 @@ urlpatterns = [
         name="product_detail",
     ),
 ]
+htmx_urlpatterns = [
+    
+]
+
+urlpatterns += htmx_urlpatterns

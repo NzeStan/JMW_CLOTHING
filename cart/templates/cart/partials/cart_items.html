@@ -3,7 +3,8 @@
         <thead>
             <tr>
                 <th>Image</th>
-                <th>Product</th>
+                <th>Item</th>
+                <th>Type</th>
                 <th>Quantity</th>
                 <th>Remove</th>
                 <th>Unit price</th>
@@ -12,23 +13,25 @@
         </thead>
         <tbody>
             {% for item in cart %}
-                {% with product=item.product %}
+                {% with object=item.item %}
                     <tr>
                         <td>
-                            <a href="{{ product.get_absolute_url }}">
-                                <img src="{% if product.image %}{{ product.image }}{% else %}https://cdn-icons-png.flaticon.com/512/8136/8136031.png{% endif %}">
+                            <a href="{{ object.get_absolute_url }}">
+                                <img src="{% if object.image %}{{ object.image.url }}{% else %}https://cdn-icons-png.flaticon.com/512/8136/8136031.png{% endif %}">
                             </a>
                         </td>
-                        <td>{{ product.name }}</td>
+                        <td>{{ object.name }}</td>
+                        <td>{{ item.model }}</td>
                         <td>
-                        <form  method="post" hx-post="{% url 'cart:cart_add' product.id %}" hx-target="#cart-items" hx-swap="innerHTML">
-                        {{ cart_product_form }}
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Add to cart</button>
-                        </form>
+                            <form action="{% url 'cart:cart_add' item.model item.id %}" method="post">
+                                {% csrf_token %}
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.override }}
+                                <input type="submit" value="Update">
+                            </form>
                         </td>
                         <td>
-                            <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                            <form action="{% url 'cart:cart_remove' item.model item.id %}" method="post">
                                 {% csrf_token %}
                                 <input type="submit" value="Remove">
                             </form>
@@ -40,7 +43,7 @@
             {% endfor %}
             <tr class="total">
                 <td>Total</td>
-                <td colspan="4"></td>
+                <td colspan="5"></td>
                 <td class="num">${{ cart.get_total_price }}</td>
             </tr>
         </tbody>
